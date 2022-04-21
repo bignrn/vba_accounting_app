@@ -104,6 +104,7 @@ Private Sub UserForm_Initialize()
         .AddItem "Level.2"
         .AddItem "Level.3"
         .AddItem "Level.4"
+        .AddItem "ヒーリング"
     End With
     LBlevel.IMEMode = fmIMEModeAlpha
     TBmark.IMEMode = fmIMEModeHiragana
@@ -127,6 +128,7 @@ End Sub
 '
 '====================
 Private Sub CBadd_Click()
+On Error GoTo Exception
     '変数
     'Dim LastLine As Long    '最終行の取得
     Dim LL As Long          '最終行に１プラス
@@ -141,6 +143,7 @@ Private Sub CBadd_Click()
     flag = True
     
     'データが既に入っていないか調べる
+    '全て調べる必要ある？
     Dim Err As Long         'For文
     For Err = 4 To LastLine
         If Cells(Err, 1).Value = NoCheck Then
@@ -149,8 +152,8 @@ Private Sub CBadd_Click()
         End If
     Next Err
     
-    '表示するか
-    If flag Then
+    '表示するかと0より大きい
+    If flag And NoCheck > 0 Then
         '収入/支出に値が入っている
         If (Not TBadd.Value = "" And TBsub.Value = "") Or (TBadd.Value = "" And Not TBsub.Value = "") Then
             '名前か項かを記入
@@ -192,6 +195,10 @@ Private Sub CBadd_Click()
         'エラー検出
         MsgBox "Error:既にデータが入っています。", vbOKOnly
     End If
+    
+    Exit Sub
+Exception:
+    MsgBox "予期しないエラーです。"
 End Sub
 
 '====================
@@ -203,6 +210,7 @@ End Sub
 '
 '====================
 Private Sub CBedit_Click()
+On Error GoTo Exception
     '初期化
     LastLine = Worksheets(sheetNameGlobal).Range("B" & Rows.Count).End(xlUp).Row
     
@@ -267,6 +275,10 @@ Private Sub CBedit_Click()
         'エラー検出
         MsgBox "Please:追加機能お使いください", vbOKOnly
     End If
+    
+    Exit Sub
+Exception:
+    MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 '====================
@@ -276,6 +288,7 @@ End Sub
 '
 '====================
 Private Sub CBget_Click()
+On Error GoTo Exception
     '変数
     Dim No As Integer
     LastLine = Worksheets(sheetNameGlobal).Range("B" & Rows.Count).End(xlUp).Row
@@ -309,6 +322,10 @@ Private Sub CBget_Click()
         'エラー検出
         MsgBox "Error:取得する値がありません。", vbOKOnly
     End If
+    
+    Exit Sub
+Exception:
+    MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 '====================
@@ -318,5 +335,9 @@ End Sub
 '
 '====================
 Private Sub CBclose_Click()
+On Error GoTo Exception
     Unload Me
+    Exit Sub
+Exception:
+    MsgBox Err.Number & vbCrLf & Err.Description
 End Sub

@@ -84,6 +84,7 @@ Private Sub UserForm_Initialize()
         End If
     Else
         MsgBox "Error:削除不可能な場所です。", vbOKOnly
+        Call CBclose_Click
     End If
 End Sub
 
@@ -94,7 +95,11 @@ End Sub
 '
 '====================
 Private Sub CBclose_Click()
+On Error GoTo Exception
     Unload Me
+    Exit Sub
+Exception:
+    MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 '====================
@@ -105,6 +110,7 @@ End Sub
 '未実装：その範囲を削除、計算のやり直し。
 '====================
 Private Sub CBerase_Click()
+On Error GoTo Exception
     '変数
     Dim Fast As Integer
     Dim Last As Integer
@@ -126,6 +132,11 @@ Private Sub CBerase_Click()
     
     '閉じる
     Unload Me
+    
+    Exit Sub
+Exception:
+    '例外処理
+    MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 '====================
@@ -139,6 +150,7 @@ End Sub
 '未実装：
 '====================
 Function EraseAllCell(FastCell As Integer, LastCell As Integer) As Boolean
+On Error GoTo Exception
     '変数
     Dim flag As Boolean
     Dim LastLine As Integer
@@ -200,4 +212,9 @@ Function EraseAllCell(FastCell As Integer, LastCell As Integer) As Boolean
     
     '戻り値
     EraseAllCell = flag
+
+    Exit Function
+Exception:
+    '例外処理
+    MsgBox Err.Number & vbCrLf & Err.Description
 End Function

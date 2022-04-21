@@ -23,6 +23,7 @@ Dim flg As Boolean
 '
 '====================
 Sub Calculation_Click()
+On Error GoTo Exception
     '変数
     Dim m As Integer
     Dim 日付 As Long
@@ -86,6 +87,11 @@ Sub Calculation_Click()
     Cells(3, 5).Value = Date & "/" & Time
     
     Cells(最終行 + 1, 1).Select
+
+    Exit Sub
+Exception:
+    '例外処理
+    MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 '*****************
 '用途:計算結果を出力

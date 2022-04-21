@@ -6,6 +6,9 @@ Attribute VB_Name = "Module1"
 '
 '@ather nora
 '@version 1.0
+'
+'参考資料
+'https://www.sejuku.net/blog/35484
 '*********************
 
 'グローバル変数
@@ -22,7 +25,11 @@ Public LastLine As Integer
 '
 '====================
 Sub UserFormOPEN_Click()
+On Error GoTo Exception
     UserForm1.Show
+    Exit Sub
+Exception:
+        MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 '====================
@@ -32,7 +39,11 @@ End Sub
 '
 '====================
 Sub EraseUserFormOPEN_Click()
+On Error GoTo Exception
     UserForm2.Show
+    Exit Sub
+Exception:
+        MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
 '====================
@@ -42,6 +53,10 @@ End Sub
 '
 '====================
 Sub BackSheet_Click()
+On Error GoTo Exception
     Worksheets(sheetNameGlobal).Activate
+    Exit Sub
+Exception:
+        MsgBox Err.Number & vbCrLf & Err.Description
 End Sub
 
